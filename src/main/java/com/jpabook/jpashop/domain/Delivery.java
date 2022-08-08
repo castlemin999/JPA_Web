@@ -14,7 +14,7 @@ public class Delivery {
     private Long id;
 
     // 1:1 관계에서는 Access가 더 많은 곳에 FK를 설정해준다
-    @OneToOne(mappedBy = "delivery")
+    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
     private Order order;
 
     @Embedded
