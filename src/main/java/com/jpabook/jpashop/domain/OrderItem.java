@@ -1,7 +1,9 @@
 package com.jpabook.jpashop.domain;
 
 import com.jpabook.jpashop.domain.item.Item;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.aspectj.weaver.ast.Or;
 
@@ -10,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
     @Id
@@ -27,6 +30,11 @@ public class OrderItem {
 
     private int orderPrice;
     private int count;
+
+    // @NoArgsConstructor(access = AccessLevel.PROTECTED)로 자동 생성
+    /* protected OrderItem() {
+
+    }*/
 
     //==생성 메서드==//
     public static OrderItem createOrderItems(Item item, int orderPrice, int count) {
