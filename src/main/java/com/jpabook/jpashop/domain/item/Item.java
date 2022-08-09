@@ -1,6 +1,7 @@
 package com.jpabook.jpashop.domain.item;
 
 import com.jpabook.jpashop.domain.Category;
+import com.jpabook.jpashop.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +14,6 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) // 한테이블에 다 넣는다.
 @DiscriminatorColumn(name = "dtype")
 @Getter
-@Setter
 public abstract class Item {
 
     @Id
@@ -27,5 +27,29 @@ public abstract class Item {
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
+
+
+    // === 비즈니스 로직 ===
+
+    //setter를 활용 해 밖에서 값을 조작 후 주입하는것보다
+     //entity 안에서 직접 관리하는것이 더 효율적임 (객체지향적)
+
+    /**
+     * stock 증가
+     */
+    public void addStock(int quantity) {
+        this.stockQuantity += quantity;
+    }
+
+    /**
+     * stock 감소
+     */
+    public void removeStock(int quantity) {
+        int restStock = this.stockQuantity - quantity;
+        if (restStock < 0) {
+            throw new NotEnoughStockException("need more stock");
+        }
+        this.stockQuantity = restStock;
+    }
 
 }
