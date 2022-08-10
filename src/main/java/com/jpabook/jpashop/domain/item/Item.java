@@ -13,7 +13,7 @@ import java.util.List;
 // 상속관계 전략
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) // 한테이블에 다 넣는다.
 @DiscriminatorColumn(name = "dtype")
-@Getter
+@Getter @Setter
 public abstract class Item {
 
     @Id
