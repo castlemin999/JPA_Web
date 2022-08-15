@@ -10,6 +10,7 @@ import com.jpabook.jpashop.repository.ItemRepository;
 import com.jpabook.jpashop.repository.MemberRepository;
 import com.jpabook.jpashop.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +48,10 @@ public class OrderService {
 
         // 주문 생성
         Order order = Order.createOrder(member, delivery, orderItem);
+
+        // 주문 저장
+        // Cascade 옵션으로 OrderItem과 Delivery에 자동으로 데이터 입력됨
+        orderRepository.save(order);
 
         return order.getId();
     }
